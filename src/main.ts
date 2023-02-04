@@ -1,4 +1,4 @@
-namespace Gunjo {
+namespace Gnjo {
 
   export enum TokenType {
     // ILLEGAL - illegal token
@@ -17,6 +17,10 @@ namespace Gunjo {
     COMMA,
     // PERCENTAGE - %
     PERCENTAGE,
+    // COLON - :
+    COLON,
+    // SEMICOLON - ;
+    SEMICOLON,
     // SLASH - /
     SLASH,
     // SPACE - " "
@@ -39,6 +43,10 @@ namespace Gunjo {
     TURN,
     // DEG - deg (hsl, hwb)
     DEG,
+    // RAD - rad (hsl, hwb)
+    RAD,
+    // GRAD - grad (hsl, hwb)
+    GRAD,
     // STRING - string
     STRING,
   }
@@ -72,6 +80,8 @@ namespace Gunjo {
     ["lab", TokenType.LAB],
     ["turn", TokenType.TURN],
     ["deg", TokenType.DEG],
+    ["rad", TokenType.RAD],
+    ["grad", TokenType.GRAD],
 
     // named collors
     /**
@@ -286,7 +296,7 @@ namespace Gunjo {
       }
       const result = this.input.substring(pos, this._pos)
       this._stepBack()
-      return [result, dotCount === 1, dotCount <= 0]
+      return [result, dotCount === 1, dotCount <= 1]
     }
 
     private _isWhitespace(ch: string) { return (/[\s]/.test(ch)) }
@@ -294,6 +304,7 @@ namespace Gunjo {
       while (this._isWhitespace(this._ch)) {
         this._readChar()
       }
+      this._stepBack()
     }
 
     private _analyzeToken(): Token {
@@ -318,6 +329,12 @@ namespace Gunjo {
         case "/":
           t = new Token(TokenType.SLASH, this._ch)
           break
+        case ":":
+          t = new Token(TokenType.COLON, this._ch)
+          break
+        case ";":
+          t = new Token(TokenType.SEMICOLON, this._ch)
+          break
         case ".":
           t = new Token(TokenType.DOT, this._ch)
           if (this._isDigit(this._peekChar())) {
@@ -326,8 +343,8 @@ namespace Gunjo {
             const [num, isFloat, isValid] = this._readNumber()
             t.literal = ch + num
             t.type = TokenType.NUMBER
-            if (!isFloat && !isValid) {
-              t.type = TokenType.ILLEGAL
+            if (isFloat || !isValid) {
+              t.type = TokenType.STRING
             }
           }
           break
@@ -336,9 +353,12 @@ namespace Gunjo {
           break
         default:
           if (this._isWhitespace(this._ch)) {
-            this._skipWhitespace()
-            t.literal = ''
+            t.literal = this._ch
             t.type = TokenType.SPACE
+            if (this._isWhitespace(this._peekChar())) {
+              this._readChar()
+              this._skipWhitespace()
+            }
             break
           } else if (this._isLetter(this._ch)) {
             t.literal = this._readLiteral()
@@ -349,14 +369,14 @@ namespace Gunjo {
             t.literal = literal
             t.type = TokenType.NUMBER
             if (!isValid) {
-              t.type = TokenType.ILLEGAL
+              t.type = TokenType.STRING
             }
             break
           }
           t = new Token(TokenType.ILLEGAL, this._ch)
           break
       }
-
+      this._readChar()
       return t
     }
 
@@ -365,7 +385,9 @@ namespace Gunjo {
       let token: Token
       do {
         token = this._analyzeToken()
-        tokens.push(token)
+        if (token.type !== TokenType.SPACE) {
+          tokens.push(token)
+        }
       } while (token.type != TokenType.EOS)
       return tokens
     }
@@ -373,4 +395,4 @@ namespace Gunjo {
 
 }
 
-export default Gunjo
+export default Gnjo
