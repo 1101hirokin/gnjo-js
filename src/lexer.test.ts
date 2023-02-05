@@ -1,4 +1,4 @@
-import Gnjo from "./main";
+import * as Gnjo from "./main";
 
 describe("lexical analyzing", () => {
   describe("string", () => {
@@ -9,6 +9,7 @@ describe("lexical analyzing", () => {
 
         const expected: Gnjo.Token[] = [
           new Gnjo.Token(Gnjo.TokenType.STRING, "lorem"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.STRING, "ipsum"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
         ]
@@ -21,6 +22,7 @@ describe("lexical analyzing", () => {
 
         const expected: Gnjo.Token[] = [
           new Gnjo.Token(Gnjo.TokenType.STRING, "lorem"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.STRING, "ipsum"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
         ]
@@ -32,8 +34,11 @@ describe("lexical analyzing", () => {
         const result = lexer.analyze()
 
         const expected: Gnjo.Token[] = [
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.STRING, "lorem"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.STRING, "ipsum"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
         ]
 
@@ -45,6 +50,7 @@ describe("lexical analyzing", () => {
         const result = lexer.analyze()
 
         const expected: Gnjo.Token[] = [
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
         ]
 
@@ -123,7 +129,7 @@ describe("lexical analyzing", () => {
         expect(result).toEqual(expected)
       })
     })
-    describe("illegal syntax", () => {
+    describe("incorrect syntax", () => {
       it("1..23456789", () => {
         const lexer = new Gnjo.Lexer("1..23456789")
         const result = lexer.analyze()
@@ -218,7 +224,7 @@ describe("lexical analyzing", () => {
         expect(result).toEqual(expected)
       })
     })
-    describe("illegal syntax", () => {
+    describe("incorrect syntax", () => {
       it("blackblackblack", () => {
         const lexer = new Gnjo.Lexer("blackblackblack")
         const result = lexer.analyze()
@@ -316,6 +322,31 @@ describe("lexical analyzing", () => {
 
         expect(result).toEqual(expected)
       })
+      it("rgb  (  255   ,  30   ,  4   )", () => {
+        const lexer = new Gnjo.Lexer("rgb  (  255   ,  30   ,  4   )")
+        const result = lexer.analyze()
+
+        const expected: Gnjo.Token[] = [
+          new Gnjo.Token(Gnjo.TokenType.RGBA, "rgb"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.NUMBER, "255"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.NUMBER, "30"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.NUMBER, "4"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
+          new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
+          new Gnjo.Token(Gnjo.TokenType.EOS, ""),
+        ]
+
+        expect(result).toEqual(expected)
+      })
       it("rgba(123,0,45);", () => {
         const lexer = new Gnjo.Lexer("rgba(123,0,45);")
         const result = lexer.analyze()
@@ -348,6 +379,7 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "128"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0.3"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -388,7 +420,9 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "2"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "3"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "30"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
@@ -412,9 +446,11 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "255"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
@@ -433,12 +469,16 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "1"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "77"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, ".12345"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -457,11 +497,15 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "5.34"),
           new Gnjo.Token(Gnjo.TokenType.TURN, "turn"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "2"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0.12345"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -479,11 +523,15 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.DEG, "deg"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "100"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "100"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "1"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -494,7 +542,7 @@ describe("lexical analyzing", () => {
     })
   })
 
-  describe("hwd color", () => {
+  describe("hwb color", () => {
     describe("correct syntax", () => {
       it("hwb(255, 60%,  0%)", () => {
         const lexer = new Gnjo.Lexer("hwb(255, 60%,  0%)")
@@ -505,9 +553,11 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "255"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
@@ -517,8 +567,8 @@ describe("lexical analyzing", () => {
         expect(result).toEqual(expected)
       })
 
-      it("hwb(1, 60%,  77% / .12345)", () => {
-        const lexer = new Gnjo.Lexer("hwb(1, 60%,  77% / .12345)")
+      it("hwb(1, 60%,  77% /    .12345)", () => {
+        const lexer = new Gnjo.Lexer("hwb(1, 60%,  77% /    .12345)")
         const result = lexer.analyze()
 
         const expected: Gnjo.Token[] = [
@@ -526,12 +576,16 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "1"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "77"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, ".12345"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -550,11 +604,15 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "100.0"),
           new Gnjo.Token(Gnjo.TokenType.RAD, "rad"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "2"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "20"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
@@ -573,11 +631,15 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.DEG, "deg"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "100"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "100"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "1"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
@@ -590,8 +652,8 @@ describe("lexical analyzing", () => {
 
   describe("lab color", () => {
     describe("correct syntax <experimental>", () => {
-      it("lab(12.345678%, 60%,  0.2%)", () => {
-        const lexer = new Gnjo.Lexer("lab(12.345678%, 60%,  0.2%)")
+      it("lab(12.345678%,60%,  0.2%)", () => {
+        const lexer = new Gnjo.Lexer("lab(12.345678%,60%,  0.2%)")
         const result = lexer.analyze()
 
         const expected: Gnjo.Token[] = [
@@ -603,6 +665,7 @@ describe("lexical analyzing", () => {
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "60"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0.2"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
@@ -618,15 +681,20 @@ describe("lexical analyzing", () => {
         const expected: Gnjo.Token[] = [
           new Gnjo.Token(Gnjo.TokenType.LAB, "lab"),
           new Gnjo.Token(Gnjo.TokenType.LPAREN, "("),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
           new Gnjo.Token(Gnjo.TokenType.COMMA, ","),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, "0"),
           new Gnjo.Token(Gnjo.TokenType.PERCENTAGE, "%"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.SLASH, "/"),
+          new Gnjo.Token(Gnjo.TokenType.SPACE, " "),
           new Gnjo.Token(Gnjo.TokenType.NUMBER, ".1234"),
           new Gnjo.Token(Gnjo.TokenType.RPAREN, ")"),
           new Gnjo.Token(Gnjo.TokenType.EOS, ""),
