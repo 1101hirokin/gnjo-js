@@ -63,6 +63,39 @@ export class RGBASpace implements ColorSpace {
   public toLab(): LabSpace {
     return this.toXYZ().toLab()
   }
+
+  public toHSLA(): HSLASpace {
+    const max = Math.max(this.r, this.g, this.b)
+    const min = Math.min(this.r, this.g, this.b)
+    const diff = max - min
+    const l = (max + min) / 2
+    let h = 0
+    let s = 0
+    if (diff === 0) {
+      h = 0
+      s = 0
+    } else {
+      s = l < 0.5 ? diff / (max + min) : diff / (2 - max - min)
+      switch (max) {
+        case this.r:
+          h = (this.g - this.b) / diff + (this.g < this.b ? 6 : 0)
+          break
+        case this.g:
+          h = (this.b - this.r) / diff + 2
+          break
+        case this.b:
+          h = (this.r - this.g) / diff + 4
+          break
+      }
+      h /= 6
+    }
+    return new HSLASpace(
+      { value: h * 360, unit: "", },
+      s * 100,
+      l * 100,
+      this.alpha,
+    )
+  }
 }
 export class HSLASpace implements ColorSpace {
   public h: ValueWithAngleUnit

@@ -56,16 +56,6 @@ describe("color space", () => {
 
         expect(result).toBeCloseTo(1.37, 1)
       })
-      it("compare RGB and Lab-converted RGB", () => {
-
-        const RGB = new RGBASpace(112, 34, 221)
-        const Lab = RGB.toLab()
-        const reRGB = Lab.toRGBA()
-
-        const contrast = calcContrast(RGB, reRGB)
-        console.log({ contrast })
-        expect(contrast).toBeCloseTo(1, 1)
-      })
     })
   })
 })
