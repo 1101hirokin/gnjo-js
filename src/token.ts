@@ -35,6 +35,8 @@ export enum TokenType {
   HWB,
   // LCH - lch
   LCH,
+  // XYZ - xyz
+  XYZ,
   // LAB - Lab
   LAB,
   // TURN - turn (hsl, hwb)
@@ -73,6 +75,7 @@ const keywords = new Map<string, TokenType>([
   ["rgba", TokenType.RGBA],
   ["hsl", TokenType.HSLA],
   ["hsla", TokenType.HSLA],
+  ["xyz", TokenType.XYZ],
   ["hwb", TokenType.HWB],
   ["lch", TokenType.LCH],
   ["lab", TokenType.LAB],
@@ -203,6 +206,7 @@ const keywords = new Map<string, TokenType>([
   ["oldlace", TokenType.NAMEDCOLOR],
   ["olivedrab", TokenType.NAMEDCOLOR],
   ["orangered", TokenType.NAMEDCOLOR],
+  ["orchid", TokenType.NAMEDCOLOR],
   ["palegoldenrod", TokenType.NAMEDCOLOR],
   ["palegreen", TokenType.NAMEDCOLOR],
   ["paleturquoise", TokenType.NAMEDCOLOR],
@@ -219,6 +223,8 @@ const keywords = new Map<string, TokenType>([
   ["salmon", TokenType.NAMEDCOLOR],
   ["sandybrown", TokenType.NAMEDCOLOR],
   ["seashell", TokenType.NAMEDCOLOR],
+  ["seagreen", TokenType.NAMEDCOLOR],
+  ["sienna", TokenType.NAMEDCOLOR],
   ["skyblue", TokenType.NAMEDCOLOR],
   ["slateblue", TokenType.NAMEDCOLOR],
   ["slategray", TokenType.NAMEDCOLOR],

@@ -243,6 +243,63 @@ export class Parser {
     this.stepNextToken()
     return node
   }
+  private parseXYZColor(): AST.XYZNode {
+    const node = AST.XYZNode.getEmpty(this.curToken)
+    if (!this.currentTokenIs(TokenType.XYZ)) {
+      let found = false
+      do {
+        this.stepNextToken()
+        if (this.currentTokenIs(TokenType.XYZ)) {
+          found = true
+          break
+        }
+      } while (!this.currentTokenIs(TokenType.XYZ) && !this.currentTokenIs(TokenType.EOS))
+      if (!found) {
+        this.errors.push(new ParseError("invalid XYZ syntax. xyz not found", ParseErrorCategory.XYZ_PARSING))
+      }
+    }
+    this.stepNextToken()
+    if (this.currentTokenIs(TokenType.LPAREN)) {
+      this.stepNextToken()
+      const nodes: AST.ValueNode[] = []
+      while (
+        !this.currentTokenIs(TokenType.RPAREN)
+      ) {
+        switch (this.curToken.type) {
+          case TokenType.NUMBER:
+            nodes.push(this.parseValue())
+            break
+          case TokenType.COMMA:
+            this.stepNextToken()
+            if (this.currentTokenIs(TokenType.COMMA)) {
+              this.errors.push(new ParseError(`invalid XYZ syntax. too many commas. `, ParseErrorCategory.XYZ_PARSING))
+              this.skipTokens(TokenType.COMMA)
+            }
+            break
+          default:
+            this.stepNextToken()
+            break
+        }
+        if (this.currentTokenIs(TokenType.EOS)) {
+          this.errors.push(new ParseError("invalid XYZ syntax. ) not found.", ParseErrorCategory.XYZ_PARSING))
+          break
+        }
+      }
+      if (nodes.length === 3) {
+        node.x = nodes[0]
+        node.y = nodes[1]
+        node.z = nodes[2]
+      } else {
+        this.errors.push(new ParseError("invalid XYZ syntax. invalid number of values", ParseErrorCategory.XYZ_PARSING))
+      }
+    } else {
+      this.errors.push(new ParseError("invalid XYZ value.", ParseErrorCategory.XYZ_PARSING))
+    }
+
+    this.stepNextToken()
+    return node
+  }
+
   private parseLabColor(): AST.LabNode {
     const node = AST.LabNode.getEmpty(this.curToken)
     if (!this.currentTokenIs(TokenType.LAB)) {
@@ -349,6 +406,9 @@ export class Parser {
         case TokenType.HWB:
           nodes.push(this.parseHWBColor())
           break
+        case TokenType.XYZ:
+          nodes.push(this.parseXYZColor())
+          break
         case TokenType.LAB:
           nodes.push(this.parseLabColor())
           break
@@ -386,6 +446,7 @@ export enum ParseErrorCategory {
   RGBA_PARSING,
   HSLA_PARSING,
   HWB_PARSING,
+  XYZ_PARSING,
   LAB_PARSING,
   TOO_SHORT_NODES,
   TOO_MANY_NODES,

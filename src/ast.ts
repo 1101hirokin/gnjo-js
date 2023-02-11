@@ -8,23 +8,25 @@ namespace AST {
     }
   }
 
+  export type NodeType = "value" | "namedColor" | "hex" | "rgba" | "hsla" | "hwb" | "lab" | "xyz"
   export interface Node {
     getTokenLiteral(): string
     toString(): string
+    getType(): NodeType
   }
   export class ValueNode implements Node {
     public readonly token: Token // should have NUMBER token type
     getTokenLiteral(): string { return this.token.literal }
-
+    getType(): NodeType { return "value" }
     public value: string
-    public unit: string | null
-    constructor(token: Token, value: string, unit?: string) {
+    public unit: string
+    constructor(token: Token, value: string, unit: string = "") {
       this.token = token
       this.value = value
-      this.unit = (unit) ? unit : null
+      this.unit = unit
     }
     public toString(): string {
-      return `${this.value ? this.value : 0}${this.unit ? this.unit : ''}`
+      return `${this.value ? this.value : 0}${this.unit}`
     }
     public static getEmpty(token: Token): ValueNode {
       return new ValueNode(token, "")
@@ -34,7 +36,7 @@ namespace AST {
   export class NamedColorNode implements Node {
     public readonly token: Token // should have NAMEDCOLOR token type
     public getTokenLiteral(): string { return this.token.literal }
-
+    public getType(): NodeType { return "namedColor" }
     public value: string
 
     constructor(token: Token) {
@@ -53,7 +55,7 @@ namespace AST {
   export class HEXNode implements Node {
     public readonly token: Token // should have SHARP token type
     public getTokenLiteral(): string { return this.token.literal }
-
+    public getType(): NodeType { return "hex" }
     public r: string
     public g: string
     public b: string
@@ -77,7 +79,8 @@ namespace AST {
   }
   export class RGBANode implements Node {
     public readonly token: Token // should have RGBA token type
-    getTokenLiteral(): string { return this.token.literal }
+    public getTokenLiteral(): string { return this.token.literal }
+    public getType(): NodeType { return "rgba" }
     public r: ValueNode
     public g: ValueNode
     public b: ValueNode
@@ -116,7 +119,8 @@ namespace AST {
   }
   export class HSLANode implements Node {
     public readonly token: Token // should have HSL token type
-    getTokenLiteral(): string { return this.token.literal }
+    public getTokenLiteral(): string { return this.token.literal }
+    public getType(): NodeType { return "hsla" }
     public h: ValueNode
     public s: ValueNode
     public l: ValueNode
@@ -155,7 +159,8 @@ namespace AST {
   }
   export class HWBNode implements Node {
     public readonly token: Token // should have HWB token type
-    getTokenLiteral(): string { return this.token.literal }
+    public getTokenLiteral(): string { return this.token.literal }
+    public getType(): NodeType { return "hwb" }
     public h: ValueNode
     public w: ValueNode
     public b: ValueNode
@@ -192,10 +197,51 @@ namespace AST {
       )
     }
   }
-  export class LabNode implements Node {
-    public readonly token: Token // should have LAB token type 
-    getTokenLiteral(): string { return this.token.literal }
+  export class XYZNode implements Node {
+    public readonly token: Token // should have XYZ token type
+    public getTokenLiteral(): string { return this.token.literal }
+    public getType(): NodeType { return "xyz" }
+    public x: ValueNode
+    public y: ValueNode
+    public z: ValueNode
+    public alpha?: ValueNode
 
+    constructor(
+      token: Token,
+      x: ValueNode,
+      y: ValueNode,
+      z: ValueNode,
+      alpha?: ValueNode,
+    ) {
+      this.token = token
+      this.x = x
+      this.y = y
+      this.z = z
+      this.alpha = alpha
+    }
+
+    public toString(): string {
+      let str = `${this.getTokenLiteral()}(${this.x.toString()},${this.y.toString()},${this.z.toString()}`
+      if (this.alpha) {
+        str += `,${this.alpha.toString()}`
+      }
+      str += ")"
+      return str
+    }
+    public static getEmpty(token: Token): XYZNode {
+      return new XYZNode(
+        token,
+        new ValueNode(new Token(TokenType.ILLEGAL, ""), ""),
+        new ValueNode(new Token(TokenType.ILLEGAL, ""), ""),
+        new ValueNode(new Token(TokenType.ILLEGAL, ""), ""),
+      )
+    }
+  }
+
+  export class LabNode implements Node {
+    public readonly token: Token // should have LAB token type  
+    public getTokenLiteral(): string { return this.token.literal }
+    public getType(): NodeType { return "lab" }
     public l: ValueNode
     public a: ValueNode
     public b: ValueNode
