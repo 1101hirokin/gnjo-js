@@ -189,7 +189,6 @@ describe("color space testing", () => {
 
   describe("Lab color space", () => {
     describe("convert to other color space", () => {
-
       describe("convert lab(66, 9, -80) to xyz", () => {
         it("should be xyz(.3611, .3532, 1.4552)", () => {
           const color = new LabSpace(66, 9, -80)
@@ -206,9 +205,6 @@ describe("color space testing", () => {
         it("should be rgb(0, 164, 255)", () => {
           const color = new LabSpace(66, 9, -80)
           const result = color.toRGBA()
-
-          console.log(color.toString())
-
           const expected = new RGBASpace(0, 164, 255)
 
           expect(result.r).toBeCloseTo(expected.r, 0)
