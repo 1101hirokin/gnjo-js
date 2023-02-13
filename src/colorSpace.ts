@@ -1,8 +1,26 @@
+import { Lexer } from "./lexer"
+import { Parser } from "./parser"
+
 /**
  * Color space interface
+ * 
+ * @export
+ * @interface ColorSpace
+ * 
+ * @method toRGBA() convert to sRGB color space
+ * @method toHSLA() convert to HSL color space
+ * @method toHWB() convert to HWB color space
+ * @method toXYZ() convert to XYZ color space
+ * @method toLab() convert to LAB color space
+ * @method toString() convert to string
  */
 export interface ColorSpace {
   toRGBA(): RGBASpace // convert to sRGB color space
+  toHSLA(): HSLASpace // convert to HSL color space
+  toHWB(): HWBSpace // convert to HWB color space
+  toXYZ(): XYZSpace // convert to XYZ color space
+  toLab(): LabSpace // convert to LAB color space
+
   toString(): string
 }
 
@@ -11,43 +29,6 @@ export type ValueWithAngleUnit = {
   unit: "" | "deg" | "turn" | "rad" | "grad"
 }
 
-
-const calcRelLumMember = (value: number): number => {
-  const ratio = (value / 255)
-  return (ratio <= .03928) ? (ratio / 12.92) : ((ratio + .055) / 1.055) ** 2.4
-}
-
-/**
- * @param colorSpace 
- * @returns relative luminance
- */
-export const calcRelLum = (colorSpace: ColorSpace): number => {
-  const cs = colorSpace.toRGBA()
-  const R = calcRelLumMember(cs.r)
-  const G = calcRelLumMember(cs.g)
-  const B = calcRelLumMember(cs.b)
-
-  const converter = [
-    .2126, .7152, .0722
-  ]
-
-  return converter[0] * R + converter[1] * G + converter[2] * B
-}
-
-/**
- * @param firstColor 
- * @param secondColor 
- * @returns color contrast
- */
-export const calcContrast = (firstColor: ColorSpace, secondColor: ColorSpace): number => {
-  const first = firstColor.toRGBA()
-  const second = secondColor.toRGBA()
-
-  const relLum_1st = calcRelLum(first)
-  const relLum_2nd = calcRelLum(second)
-
-  return (relLum_1st >= relLum_2nd) ? ((relLum_1st + .05) / (relLum_2nd + .05)) : ((relLum_2nd + .05) / (relLum_1st + .05))
-}
 
 
 /**
@@ -58,10 +39,10 @@ export const calcContrast = (firstColor: ColorSpace, secondColor: ColorSpace): n
  * @export
  * @class RGBASpace
  * @implements {ColorSpace}
- * @param {number} r - red
- * @param {number} g - green
- * @param {number} b - blue
- * @param {number} [alpha=1] - alpha
+ * @param {number} r - red: 0-255
+ * @param {number} g - green: 0-255
+ * @param {number} b - blue: 0-255
+ * @param {number} [alpha=1] - alpha: 0-1
  * @returns {RGBASpace}
   */
 export class RGBASpace implements ColorSpace {
@@ -77,6 +58,9 @@ export class RGBASpace implements ColorSpace {
     this.b = b
     this.alpha = alpha
   }
+  public static getZero = (): RGBASpace => {
+    return new RGBASpace(0, 0, 0, 0)
+  }
 
   public toRGBA = (): RGBASpace => {
     return this
@@ -84,37 +68,6 @@ export class RGBASpace implements ColorSpace {
   public toString = (): string => {
     const result = `rgb(${this.r},${this.g},${this.b},${this.alpha})`
     return result
-  }
-
-  public toGrayscale = (): RGBASpace => {
-    const converter = [
-      [0.299],
-      [0.587],
-      [0.114],
-    ]
-
-    const gray = (converter[0][0] * this.r) + (converter[1][0] * this.g) + (converter[2][0] * this.b)
-    return new RGBASpace(gray, gray, gray, this.alpha,)
-  }
-  public isLight = (): boolean => {
-    const gray = Math.sqrt((0.299 * this.r ** 2) + (0.587 * this.g ** 2) + (0.114 * this.b ** 2))
-    return (gray > 127.5)
-  }
-
-  public toXYZ(): XYZSpace {
-    const converter = [
-      [0.4124564, 0.3575761, 0.1804375],
-      [0.2126729, 0.7151522, 0.0721750],
-      [0.0193339, 0.1191920, 0.9503041],
-    ]
-    const f = (v: number) => (v > 0.04045) ? ((v + 0.055) / 1.055) ** 2.4 : v / 12.92
-    const [r, g, b] = converter.map((v) => v[0] * f(this.r / 255) + v[1] * f(this.g / 255) + v[2] * f(this.b / 255))
-
-    return new XYZSpace(r, g, b, this.alpha)
-  }
-
-  public toLab(): LabSpace {
-    return this.toXYZ().toLab()
   }
 
   public toHSLA(): HSLASpace {
@@ -187,6 +140,20 @@ export class RGBASpace implements ColorSpace {
       this.alpha,
     )
   }
+  public toXYZ(): XYZSpace {
+    const converter = [
+      [0.4124564, 0.3575761, 0.1804375],
+      [0.2126729, 0.7151522, 0.0721750],
+      [0.0193339, 0.1191920, 0.9503041],
+    ]
+    const f = (v: number) => (v > 0.04045) ? ((v + 0.055) / 1.055) ** 2.4 : v / 12.92
+    const [r, g, b] = converter.map((v) => v[0] * f(this.r / 255) + v[1] * f(this.g / 255) + v[2] * f(this.b / 255))
+
+    return new XYZSpace(r, g, b, this.alpha)
+  }
+  public toLab(): LabSpace {
+    return this.toXYZ().toLab()
+  }
 }
 
 /**
@@ -197,10 +164,10 @@ export class RGBASpace implements ColorSpace {
  * @export
  * @class HSLASpace
  * @implements {ColorSpace}
- * @param {ValueWithAngleUnit} h - hue
- * @param {number} s - saturation
- * @param {number} l - lightness
- * @param {number} [alpha=1] - alpha
+ * @param {ValueWithAngleUnit} h hue: 0-360deg
+ * @param {number} s saturation: 0-1
+ * @param {number} l lightness: 0-1
+ * @param {number} [alpha=1] alpha: 0-1
  * @returns {HSLASpace}
  */
 export class HSLASpace implements ColorSpace {
@@ -213,6 +180,11 @@ export class HSLASpace implements ColorSpace {
     this.s = s
     this.l = l
     this.alpha = alpha
+  }
+
+  public removeUnit(): HSLASpace {
+    this.h = { value: HSLASpace.convertValueToDegree(this.h), unit: "" }
+    return this
   }
 
   public static convertValueToDegree = (v: ValueWithAngleUnit): number => {
@@ -231,6 +203,10 @@ export class HSLASpace implements ColorSpace {
     const v1 = (v) % 360
     return v1 >= 0 ? v1 : v1 + 360
   }
+  public toString(): string {
+    return `hsl(${this.h.value}${this.h.unit} ${this.s * 100}% ${this.l * 100}% / ${this.alpha} )`
+  }
+
   public toRGBA(): RGBASpace {
     const h = HSLASpace.convertValueToDegree(this.h)
     const c = (1 - Math.abs(2 * this.l - 1)) * this.s
@@ -271,10 +247,12 @@ export class HSLASpace implements ColorSpace {
       this.alpha,
     )
   }
-
-  public toString(): string {
-    return `hsl(${this.h.value}${this.h.unit} ${this.s * 100}% ${this.l * 100}% / ${this.alpha} )`
+  public toHSLA(): HSLASpace {
+    return this
   }
+  public toHWB(): HWBSpace { return this.toRGBA().toHWB() }
+  public toXYZ(): XYZSpace { return this.toRGBA().toXYZ() }
+  public toLab(): LabSpace { return this.toRGBA().toLab() }
 }
 
 /**
@@ -285,11 +263,10 @@ export class HSLASpace implements ColorSpace {
  * @export
  * @class HWBSpace
  * @implements {ColorSpace}
- * @param {ValueWithAngleUnit} h - hue
- * @param {number} w - whiteness
- * @param {number} b - blackness
- * @param {number} [alpha=1] - alpha
- * @returns {HWBSpace}
+ * @param {ValueWithAngleUnit} h hue: 0-360deg
+ * @param {number} w whiteness: 0-1
+ * @param {number} b blackness: 0-1
+ * @param {number} [alpha=1] alpha: 0-1
 */
 export class HWBSpace implements ColorSpace {
   public h: ValueWithAngleUnit
@@ -302,6 +279,9 @@ export class HWBSpace implements ColorSpace {
     this.w = w
     this.b = b
     this.alpha = alpha
+  }
+  public toString(): string {
+    return `hwb(${this.h.value}${this.h.unit} ${this.w * 100}% ${this.b * 100}% / ${this.alpha} )`
   }
 
   public toRGBA(): RGBASpace {
@@ -318,10 +298,10 @@ export class HWBSpace implements ColorSpace {
 
     return new RGBASpace(Math.round(c_r * 255), Math.round(c_g * 255), Math.round(c_b * 255), this.alpha)
   }
-
-  public toString(): string {
-    return `hwb(${this.h.value}${this.h.unit} ${this.w * 100}% ${this.b * 100}% / ${this.alpha} )`
-  }
+  public toHSLA(): HSLASpace { return this.toRGBA().toHSLA() }
+  public toHWB(): HWBSpace { return this }
+  public toXYZ(): XYZSpace { return this.toRGBA().toXYZ() }
+  public toLab(): LabSpace { return this.toRGBA().toLab() }
 }
 
 /**
@@ -332,11 +312,10 @@ export class HWBSpace implements ColorSpace {
  * @export
  * @class XYZSpace
  * @implements {ColorSpace}
- * @param {number} x - x
- * @param {number} y - y
- * @param {number} z - z
- * @param {number} [alpha=1] - alpha
- * @returns {XYZSpace}
+ * @param {number} x x: 0 - 0.95047
+ * @param {number} y y: 0 - 1.00000
+ * @param {number} z z: 0 - 1.08883
+ * @param {number} [alpha=1] alpha: 0-1
  * 
  */
 export class XYZSpace implements ColorSpace {
@@ -349,6 +328,10 @@ export class XYZSpace implements ColorSpace {
     this.y = y
     this.z = z
     this.alpha = alpha
+  }
+  public toString(): string { return this.toRGBA().toString() }
+  public static whitePoint(): XYZSpace {
+    return new XYZSpace(.95047, 1.00000, 1.08883) // simulate D65/2deg : sunlight at noon
   }
 
   public toRGBA(): RGBASpace {
@@ -369,10 +352,9 @@ export class XYZSpace implements ColorSpace {
     return new RGBASpace(r, g, b, this.alpha)
 
   }
-  public toString(): string { return this.toRGBA().toString() }
-  public static whitePoint(): XYZSpace {
-    return new XYZSpace(.95047, 1.00000, 1.08883) // simulate D65/2deg : sunlight at noon
-  }
+  public toHSLA(): HSLASpace { return this.toRGBA().toHSLA() }
+  public toHWB(): HWBSpace { return this.toRGBA().toHWB() }
+  public toXYZ(): XYZSpace { return this }
   public toLab(): LabSpace {
     const whitePoint = XYZSpace.whitePoint()
 
@@ -398,11 +380,10 @@ export class XYZSpace implements ColorSpace {
  * @export
  * @class LabSpace
  * @implements {ColorSpace}
- * @param {number} l - l
- * @param {number} a - green-red
- * @param {number} b - blue-yellow
- * @param {number} [alpha=1] - alpha
- * @returns {LabSpace}
+ * @param {number} l luminance: 0 - 100
+ * @param {number} a green-red: -128 - 127
+ * @param {number} b blue-yellow: -128 - 127
+ * @param {number} [alpha=1] alpha: 0-1
  */
 export class LabSpace implements ColorSpace {
   public l: number // 0 - 100
@@ -415,7 +396,15 @@ export class LabSpace implements ColorSpace {
     this.b = b
     this.alpha = alpha
   }
+  public toString(): string {
+    return this.toRGBA().toString()
+  }
 
+  public toRGBA(): RGBASpace {
+    return this.toXYZ().toRGBA()
+  }
+  public toHSLA(): HSLASpace { return this.toRGBA().toHSLA() }
+  public toHWB(): HWBSpace { return this.toRGBA().toHWB() }
   public toXYZ(): XYZSpace {
     const whitePoint = XYZSpace.whitePoint()
 
@@ -431,10 +420,5 @@ export class LabSpace implements ColorSpace {
 
     return new XYZSpace(x, y, z, this.alpha)
   }
-  public toRGBA(): RGBASpace {
-    return this.toXYZ().toRGBA()
-  }
-  public toString(): string {
-    return this.toRGBA().toString()
-  }
+  public toLab(): LabSpace { return this }
 }

@@ -1,63 +1,7 @@
-import { HSLASpace, HWBSpace, LabSpace, RGBASpace, XYZSpace, calcContrast } from "./colorSpace"
+import { HSLASpace, HWBSpace, LabSpace, RGBASpace, XYZSpace } from "./colorSpace"
 
 describe("color space testing", () => {
   describe("RGBA color space", () => {
-    describe("calc WCAG color contrast", () => {
-      it("FG:rgb(0,0,0) : BG:rgb(255,255,255)", () => {
-        const background = new RGBASpace(
-          255,
-          255,
-          255,
-          1,
-        )
-        const foreground = new RGBASpace(
-          0,
-          0,
-          0,
-          1,
-        )
-
-        const result = calcContrast(background, foreground)
-        expect(result).toBeCloseTo(21)
-      })
-      it("FG:rgb(0,0,255) : BG:rgb(255,255,255)", () => {
-        const background = new RGBASpace(
-          255,
-          255,
-          255,
-          1,
-        )
-        const foreground = new RGBASpace(
-          0,
-          0,
-          255,
-          1,
-        )
-
-        const result = calcContrast(background, foreground)
-        expect(result).toBeCloseTo(8.59)
-      })
-      it("FG:rgb(34, 155, 74) : BG:rgb(254, 118, 118)", () => {
-        const background = new RGBASpace(
-          254,
-          118,
-          118,
-          1,
-        )
-        const foreground = new RGBASpace(
-          34,
-          155,
-          74,
-          1,
-        )
-
-        const result = calcContrast(background, foreground)
-
-
-        expect(result).toBeCloseTo(1.37, 1)
-      })
-    })
-
     describe("convert to other color space", () => {
       describe("convert rgb(128, 50, 200) to hsl", () => {
         it("should be hsl(268, .60, .49)", () => {
