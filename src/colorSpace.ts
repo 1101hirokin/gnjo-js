@@ -15,12 +15,32 @@ import { Parser } from "./parser"
  * @method toString() convert to string
  */
 export interface ColorSpace {
-  toRGBA(): RGBASpace // convert to sRGB color space
-  toHSLA(): HSLASpace // convert to HSL color space
-  toHWB(): HWBSpace // convert to HWB color space
-  toXYZ(): XYZSpace // convert to XYZ color space
-  toLab(): LabSpace // convert to LAB color space
+  /**
+   * convert to sRGB color space
+   */
+  toRGBA(): RGBASpace
+  /**
+   * convert to HSL color space
+   */
+  toHSLA(): HSLASpace
+  /**
+   * convert to HWB color space
+   */
+  toHWB(): HWBSpace
+  /**
+   * convert to CIE XYZ color space
+   */
+  toXYZ(): XYZSpace
+  /**
+   * convert to CIE L*a*b* color space
+   */
+  toLab(): LabSpace
 
+  /**
+   * convert to string (css color string)
+   * 
+   * `XYZSpace` and `LabSpace` will return `rgb()` string
+   */
   toString(): string
 }
 

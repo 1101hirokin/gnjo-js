@@ -1,4 +1,4 @@
-import { isNumeric } from "./util"
+import { isNumeric } from "./utils"
 
 describe("test utils", () => {
   describe("isNumeric(str) test", () => {
