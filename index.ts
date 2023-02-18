@@ -1,5 +1,10 @@
-import * as Gnjo from './dist/main'
+import * as Gnjo from './dist';
 
-const [parsed, errors] = Gnjo.parseStringToColorSpace("#2b3aff")
-const inverted = Gnjo.getInvertedColor(parsed)
-console.log(inverted.toString())
+const [rgba, errors] = Gnjo.parseStringToColorSpace('rgba(255, 255, 255, 1)');
+
+const [AAResult, AAAResult] = Gnjo.testContrastRatio(rgba, rgba, "graphical")
+
+
+const isLight = Gnjo.isLight(rgba)
+
+const steppedColors = Gnjo.getLightenedColor(rgba, .3)
