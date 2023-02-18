@@ -1,8 +1,8 @@
 {
   "name": "gnjo-js",
   "version": "0.0.0",
-  "main": "./dist/main.js",
-  "types": "./dist/main.d.ts",
+  "main": "./main.js",
+  "types": "./main.d.ts",
   "author": "Hiroki Nakatani",
   "license": "MIT",
   "private": false,

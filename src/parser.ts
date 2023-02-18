@@ -1,7 +1,7 @@
 import AST from "./ast"
 import { Lexer } from "./lexer"
 import { Token, TokenType } from "./token"
-import { isNumeric } from "./util"
+import { isNumeric } from "./utils"
 
 export class Parser {
   private lexer: Lexer
