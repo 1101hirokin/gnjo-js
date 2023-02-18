@@ -1,6 +1,23 @@
 {
   "name": "gnjo-js",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1101hirokin/gnjo-js"
+  },
+  "description": "Gnjo JS is a Pure TypeScript library that provides utility functions for parsing, tokenizing, and evaluating color strings and converting them to JavaScript object representations of color spaces. It also allows for conversion between color spaces, obtaining complementary and opposite colors, and performing WCAG2.0 tests.",
+  "keywords": [
+    "gnjo",
+    "gnjo-js",
+    "color",
+    "color space",
+    "rgb",
+    "hsl",
+    "hwb",
+    "xyz",
+    "lab",
+    "css"
+  ],
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "author": "Hiroki Nakatani",
