@@ -6,7 +6,7 @@ You can use this library in **JavaScript** / **TypeScript** project
 
 ## Installation
 
-You can install Gnjo JS via [npm]() or [Yarn]()
+You can install Gnjo JS via [npm](https://www.npmjs.com/package/gnjo-js) or Yarn
 
 ```bash
 # using npm
