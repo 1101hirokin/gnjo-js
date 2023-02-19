@@ -6,14 +6,14 @@ You can use this library in **JavaScript** / **TypeScript** project
 
 ## Installation
 
-You can install Gnjo JS via [npm](https://www.npmjs.com/package/gnjo-js) or Yarn
+You can install Gnjo JS via [npm](https://www.npmjs.com/package/gnjo) or Yarn
 
 ```bash
 # using npm
-npm install gnjo-js
+npm install gnjo
 
 # using Yarn
-yarn add gnjo-js
+yarn add gnjo
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ yarn add gnjo-js
 You can easily obtain RGBA data from string!
 
 ```ts
-import * as Gnjo from 'gnjo-js'
+import * as Gnjo from 'gnjo'
 
 /** 
  * You can parse string to RGBA.
@@ -40,7 +40,7 @@ const blue = rgba.b // 255
 const alpha = rgba.alpha // .8
 
 // ... and you can create new RGBA object
-import * as Gnjo from 'gnjo-js'
+import * as Gnjo from 'gnjo'
 const myRgba = new Gnjo.RGBASpace(128, 128, 128, .8)
 ```
 
@@ -151,7 +151,7 @@ const steppedColors = Gnjo.getSteppedColors(color_1, color_2, 10)
 You can also obtain color space from string mannualy.
 
 ```js
-import * as Gnjo from 'gnjo-js'
+import * as Gnjo from 'gnjo'
 
 const lexer = new Gnjo.Lexer("rgba(255, 255, 255, 1)");
 const parser = new Gnjo.Parser(lexer);
