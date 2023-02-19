@@ -50,7 +50,6 @@ export type ValueWithAngleUnit = {
 }
 
 
-
 /**
  * sRGB color space
  * https://en.wikipedia.org/wiki/SRGB
@@ -119,10 +118,11 @@ export class RGBASpace implements ColorSpace {
         break
     }
     h /= 6
+    h *= 360
     s = (diff === 0) ? 0 : diff / (1 - Math.abs(2 * l - 1))
 
     return new HSLASpace(
-      { value: h * 360, unit: "", },
+      { value: (isNaN(h)? 0 : h), unit: "", },
       s,
       l,
       this.alpha,
@@ -151,10 +151,11 @@ export class RGBASpace implements ColorSpace {
         break
     }
     h /= 6
+    h *= 360
     w = min / 255
     b = 1 - max / 255
     return new HWBSpace(
-      { value: h * 360, unit: "", },
+      { value: (isNaN(h)? 0 : h), unit: "", },
       w,
       b,
       this.alpha,

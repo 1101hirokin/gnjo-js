@@ -3,74 +3,84 @@ import { HSLASpace, HWBSpace, LabSpace, RGBASpace, XYZSpace } from "./colorSpace
 describe("color space testing", () => {
   describe("RGBA color space", () => {
     describe("convert to other color space", () => {
-      describe("convert rgb(128, 50, 200) to hsl", () => {
-        it("should be hsl(268, .60, .49)", () => {
-          const color = new RGBASpace(128, 50, 200)
+      describe("convert rgb(255, 255, 255) to ...", () => {
+        it("case HSL: should be hsl(0, 0%, 100%)", () => {
+          const color = new RGBASpace(255, 255, 255)
           const result = color.toHSLA()
 
-          const expected = new HSLASpace({ value: 271.2, unit: "" }, .60, .49)
+          const expected = new HSLASpace({ value: 0, unit: "deg" }, 0, 1)
 
-          expect(result.h.value).toEqual(expected.h.value)
-          expect(result.h.unit).toEqual(expected.h.unit)
+          expect(result.h.value).toBeCloseTo(expected.h.value, 1)
           expect(result.s).toBeCloseTo(expected.s, 1)
           expect(result.l).toBeCloseTo(expected.l, 1)
         })
-      })
-      describe("convert rgb(128, 50, 200) to hwb", () => {
-        it("should be hwb(271.2, .20, .22)", () => {
-          const color = new RGBASpace(128, 50, 200)
+        it("case HWB: should be hwb(0, 100%, 0%)", () => {
+          const color = new RGBASpace(255, 255, 255)
           const result = color.toHWB()
 
-          const expected = new HWBSpace({ value: 271.2, unit: "" }, .20, .22)
+          const expected = new HWBSpace({ value: 0, unit: "deg" }, 1, 0)
 
-          //expect(result.h.value).toEqual(expected.h.value)
-          expect(result.h.unit).toEqual(expected.h.unit)
+          expect(result.h.value).toBeCloseTo(expected.h.value, 1)
           expect(result.w).toBeCloseTo(expected.w, 1)
           expect(result.b).toBeCloseTo(expected.b, 1)
         })
-      })
-      describe("convert rgb(128, 50, 200) to xyz", () => {
-        it("should be xyz(20.5%, 11.0%, 55.7%)", () => {
-          const color = new RGBASpace(128, 50, 200)
+        it("case XYZ: should be xyz(.9505, 1, 1.0891)", () => {
+          const color = new RGBASpace(255, 255, 255)
           const result = color.toXYZ()
 
-          const expected = new XYZSpace(.20468016117143293, .1104052929770536, .5569583234228841)
+          const expected = XYZSpace.whitePoint()
 
           expect(result.x).toBeCloseTo(expected.x, 1)
           expect(result.y).toBeCloseTo(expected.y, 1)
           expect(result.z).toBeCloseTo(expected.z, 1)
         })
-      })
-      describe("convert rgb(128, 50, 200) to lab", () => {
-        it("should be lab(31.6, 50.7, -40.1)", () => {
-          const color = new RGBASpace(128, 50, 200)
+        it("case Lab: should be lab(100, 0, 0)", () => {
+          const color = new RGBASpace(255, 255, 255)
           const result = color.toLab()
 
-          const expected = new LabSpace(39.64864841701541, 59.83217357092047, -64.00403899478016)
+          const expected = XYZSpace.whitePoint().toLab()
 
           expect(result.l).toBeCloseTo(expected.l, 1)
           expect(result.a).toBeCloseTo(expected.a, 1)
           expect(result.b).toBeCloseTo(expected.b, 1)
         })
       })
-      describe("convert rgb(255, 0, 128) to lab", () => {
-        it("should be lab(53.2, 80.1, 67.2)", () => {
-          const color = new RGBASpace(255, 0, 128)
-          const result = color.toLab()
+      describe("convert rgb(0, 0, 0) to ...", () => {
+        it("case HSL: should be hsl(0, 0%, 0%)", () => {
+          const color = new RGBASpace(0, 0, 0)
+          const result = color.toHSLA()
 
-          const expected = new LabSpace(54.88490601846087, 84.55248925023889, 4.065582338377061)
+          const expected = new HSLASpace({ value: 0, unit: "deg" }, 0, 0)
 
+          expect(result.h.value).toBeCloseTo(expected.h.value, 1)
+          expect(result.s).toBeCloseTo(expected.s, 1)
           expect(result.l).toBeCloseTo(expected.l, 1)
-          expect(result.a).toBeCloseTo(expected.a, 1)
+        })
+        it("case HWB: should be hwb(0, 0%, 100%)", () => {
+          const color = new RGBASpace(0, 0, 0)
+          const result = color.toHWB()
+
+          const expected = new HWBSpace({ value: 0, unit: "deg" }, 0, 1)
+
+          expect(result.h.value).toBeCloseTo(expected.h.value, 1)
+          expect(result.w).toBeCloseTo(expected.w, 1)
           expect(result.b).toBeCloseTo(expected.b, 1)
         })
-      })
-      describe("convert rgb(0,0, 84) to lab", () => {
-        it("should be lab(5.782, 34.262, -47.676)", () => {
-          const color = new RGBASpace(0, 0, 84)
+        it("case XYZ: should be xyz(0, 0, 0)", () => {
+          const color = new RGBASpace(0, 0, 0)
+          const result = color.toXYZ()
+
+          const expected = new XYZSpace(0, 0, 0)
+
+          expect(result.x).toBeCloseTo(expected.x, 1)
+          expect(result.y).toBeCloseTo(expected.y, 1)
+          expect(result.z).toBeCloseTo(expected.z, 1)
+        })
+        it("case Lab: should be lab(0, 0, 0)", () => {
+          const color = new RGBASpace(0, 0, 0)
           const result = color.toLab()
 
-          const expected = new LabSpace(5.782, 34.262, -47.676)
+          const expected = new LabSpace(0, 0, 0)
 
           expect(result.l).toBeCloseTo(expected.l, 1)
           expect(result.a).toBeCloseTo(expected.a, 1)

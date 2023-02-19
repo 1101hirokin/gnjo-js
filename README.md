@@ -97,13 +97,13 @@ const color_2 = new RGBASpace(255, 255, 255)
  *  - `ui`: UI 
  *  - `graphcal`: Graphical content
 */
-const [isAAPassed, isAAAPassed] = Gnjo.testContrastRatio(rgba, rgba, "text")
+const [isAAPassed, isAAAPassed] = Gnjo.testContrastRatio(color_1, color_1, "text")
 
 
 /**
  * get the color is light or not
 */
-const isLight = Gnjo.isLight(rgba)
+const isLight = Gnjo.isLight(color_1)
 
 /**
  * rotate it's hue.
