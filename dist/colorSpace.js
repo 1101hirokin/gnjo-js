@@ -52,8 +52,9 @@ export class RGBASpace {
                 break;
         }
         h /= 6;
+        h *= 360;
         s = (diff === 0) ? 0 : diff / (1 - Math.abs(2 * l - 1));
-        return new HSLASpace({ value: h * 360, unit: "", }, s, l, this.alpha);
+        return new HSLASpace({ value: (isNaN(h) ? 0 : h), unit: "", }, s, l, this.alpha);
     }
     toHWB() {
         const max = Math.max(this.r, this.g, this.b);
@@ -77,9 +78,10 @@ export class RGBASpace {
                 break;
         }
         h /= 6;
+        h *= 360;
         w = min / 255;
         b = 1 - max / 255;
-        return new HWBSpace({ value: h * 360, unit: "", }, w, b, this.alpha);
+        return new HWBSpace({ value: (isNaN(h) ? 0 : h), unit: "", }, w, b, this.alpha);
     }
     toXYZ() {
         const converter = [
