@@ -40,9 +40,8 @@ const blue = rgba.b // 255
 const alpha = rgba.alpha // .8
 
 // ... and you can create new RGBA object
-import { RGBASpace } from 'gnjo-js/colorSpace';
-
-const myRgba = new RGBASpace(128, 128, 128, .8)
+import * as Gnjo from 'gnjo-js'
+const myRgba = new Gnjo.RGBASpace(128, 128, 128, .8)
 ```
 
 ### Convert color space
