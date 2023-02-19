@@ -93,18 +93,24 @@ export class RGBASpace implements ColorSpace {
     let r = this.r / 255
     let g = this.g / 255
     let b = this.b / 255
-
+    
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
+
     const diff = max - min
 
     let h = 0
     let s = 0
-    let l = (max + min) / 2
+    let l = 0
 
     if (diff === 0) {
       h = 0
-      s = 0
+    } else if (max === r) {
+      h = ((g - b) / diff) % 6
+    } else if (max === g) {
+      h = (b - r) / diff + 2
+    } else {
+      h = (r - g) / diff + 4
     }
     switch (max) {
       case r:
@@ -128,6 +134,7 @@ export class RGBASpace implements ColorSpace {
       this.alpha,
     )
 
+    return new HSLASpace({ value: h, unit: "deg" }, s, l, this.alpha)
   }
   public toHWB(): HWBSpace {
     const max = Math.max(this.r, this.g, this.b)
