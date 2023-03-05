@@ -15,14 +15,14 @@
 export class RGBASpace {
     constructor(r, g, b, alpha = 1) {
         this.update = (arg) => {
-            this.r = arg.r || this.r;
-            this.g = arg.g || this.g;
-            this.b = arg.b || this.b;
-            this.alpha = arg.alpha || this.alpha;
+            this.r = (typeof arg.r !== "undefined") ? arg.r : this.r;
+            this.g = (typeof arg.g !== "undefined") ? arg.g : this.g;
+            this.b = (typeof arg.b !== "undefined") ? arg.b : this.b;
+            this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha;
             return this;
         };
         this.copyWith = (arg) => {
-            return new RGBASpace(arg.r || this.r, arg.g || this.g, arg.b || this.b, arg.alpha || this.alpha);
+            return new RGBASpace((typeof arg.r !== "undefined") ? arg.r : this.r, (typeof arg.g !== "undefined") ? arg.g : this.g, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
         };
         this.toRGBA = () => {
             return this;
@@ -136,10 +136,21 @@ RGBASpace.getZero = () => {
 export class HSLASpace {
     constructor(h, s, l, alpha = 1) {
         this.update = (arg) => {
+<<<<<<< HEAD
             return new HSLASpace(arg.h || this.h, arg.s || this.s, arg.l || this.l, arg.alpha || this.alpha);
         };
         this.copyWith = (arg) => {
             return new HSLASpace(arg.h || this.h, arg.s || this.s, arg.l || this.l, arg.alpha || this.alpha);
+=======
+            this.h = (typeof arg.h !== "undefined") ? arg.h : this.h;
+            this.s = (typeof arg.s !== "undefined") ? arg.s : this.s;
+            this.l = (typeof arg.l !== "undefined") ? arg.l : this.l;
+            this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha;
+            return this;
+        };
+        this.copyWith = (arg) => {
+            return new HSLASpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.s !== "undefined") ? arg.s : this.s, (typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+>>>>>>> release/1.1.1
         };
         this.h = h;
         this.s = s;
@@ -232,10 +243,21 @@ HSLASpace.roundDegree = (v) => {
 export class HWBSpace {
     constructor(h, w, b, alpha = 1) {
         this.update = (arg) => {
+<<<<<<< HEAD
             return new HWBSpace(arg.h || this.h, arg.w || this.w, arg.b || this.b, arg.alpha || this.alpha);
         };
         this.copyWith = (arg) => {
             return new HWBSpace(arg.h || this.h, arg.w || this.w, arg.b || this.b, arg.alpha || this.alpha);
+=======
+            this.h = (typeof arg.h !== "undefined") ? arg.h : this.h;
+            this.w = (typeof arg.w !== "undefined") ? arg.w : this.w;
+            this.b = (typeof arg.b !== "undefined") ? arg.b : this.b;
+            this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha;
+            return this;
+        };
+        this.copyWith = (arg) => {
+            return new HWBSpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.w !== "undefined") ? arg.w : this.w, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+>>>>>>> release/1.1.1
         };
         this.h = h;
         this.w = w;
@@ -278,10 +300,21 @@ export class HWBSpace {
 export class XYZSpace {
     constructor(x, y, z, alpha = 1) {
         this.update = (arg) => {
+<<<<<<< HEAD
             return new XYZSpace(arg.x || this.x, arg.y || this.y, arg.z || this.z, arg.alpha || this.alpha);
         };
         this.copyWith = (arg) => {
             return new XYZSpace(arg.x || this.x, arg.y || this.y, arg.z || this.z, arg.alpha || this.alpha);
+=======
+            this.x = (typeof arg.x !== "undefined") ? arg.x : this.x;
+            this.y = (typeof arg.y !== "undefined") ? arg.y : this.y;
+            this.z = (typeof arg.z !== "undefined") ? arg.z : this.z;
+            this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha;
+            return this;
+        };
+        this.copyWith = (arg) => {
+            return new XYZSpace((typeof arg.x !== "undefined") ? arg.x : this.x, (typeof arg.y !== "undefined") ? arg.y : this.y, (typeof arg.z !== "undefined") ? arg.z : this.z, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+>>>>>>> release/1.1.1
         };
         this.x = x;
         this.y = y;
@@ -336,10 +369,21 @@ export class XYZSpace {
 export class LabSpace {
     constructor(l, a, b, alpha = 1) {
         this.update = (arg) => {
+<<<<<<< HEAD
             return new LabSpace(arg.l || this.l, arg.a || this.a, arg.b || this.b, arg.alpha || this.alpha);
         };
         this.copyWith = (arg) => {
             return new LabSpace(arg.l || this.l, arg.a || this.a, arg.b || this.b, arg.alpha || this.alpha);
+=======
+            this.l = (typeof arg.l !== "undefined") ? arg.l : this.l;
+            this.a = (typeof arg.a !== "undefined") ? arg.a : this.a;
+            this.b = (typeof arg.b !== "undefined") ? arg.b : this.b;
+            this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha;
+            return this;
+        };
+        this.copyWith = (arg) => {
+            return new LabSpace((typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.a !== "undefined") ? arg.a : this.a, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+>>>>>>> release/1.1.1
         };
         this.l = l;
         this.a = a;
