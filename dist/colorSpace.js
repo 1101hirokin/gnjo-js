@@ -236,12 +236,6 @@ HSLASpace.roundDegree = (v) => {
 export class HWBSpace {
     constructor(h, w, b, alpha = 1) {
         this.update = (arg) => {
-<<<<<<< HEAD
-            return new HWBSpace(arg.h || this.h, arg.w || this.w, arg.b || this.b, arg.alpha || this.alpha);
-        };
-        this.copyWith = (arg) => {
-            return new HWBSpace(arg.h || this.h, arg.w || this.w, arg.b || this.b, arg.alpha || this.alpha);
-=======
             this.h = (typeof arg.h !== "undefined") ? arg.h : this.h;
             this.w = (typeof arg.w !== "undefined") ? arg.w : this.w;
             this.b = (typeof arg.b !== "undefined") ? arg.b : this.b;
@@ -250,7 +244,6 @@ export class HWBSpace {
         };
         this.copyWith = (arg) => {
             return new HWBSpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.w !== "undefined") ? arg.w : this.w, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
->>>>>>> release/1.1.1
         };
         this.h = h;
         this.w = w;
