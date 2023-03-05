@@ -81,6 +81,32 @@ export class RGBASpace implements ColorSpace {
     return new RGBASpace(0, 0, 0, 0)
   }
 
+  public update = (arg: {
+    r?: number
+    g?: number
+    b?: number
+    alpha?: number
+  }): RGBASpace => {
+    this.r = arg.r || this.r
+    this.g = arg.g || this.g
+    this.b = arg.b || this.b
+    this.alpha = arg.alpha || this.alpha
+    return this
+  }
+  public copyWith = (arg: {
+    r?: number
+    g?: number
+    b?: number
+    alpha?: number
+  }): RGBASpace => {
+    return new RGBASpace(
+      arg.r || this.r,
+      arg.g || this.g,
+      arg.b || this.b,
+      arg.alpha || this.alpha,
+    )
+  }
+
   public toRGBA = (): RGBASpace => {
     return this
   }
@@ -102,6 +128,8 @@ export class RGBASpace implements ColorSpace {
     let h = 0
     let s = 0
     let l = 0
+
+    l = (max + min) / 2
 
     if (diff === 0) {
       h = 0
@@ -133,8 +161,6 @@ export class RGBASpace implements ColorSpace {
       l,
       this.alpha,
     )
-
-    return new HSLASpace({ value: h, unit: "deg" }, s, l, this.alpha)
   }
   public toHWB(): HWBSpace {
     const max = Math.max(this.r, this.g, this.b)
@@ -208,6 +234,34 @@ export class HSLASpace implements ColorSpace {
     this.s = s
     this.l = l
     this.alpha = alpha
+  }
+
+  public update = (arg: {
+    h?: ValueWithAngleUnit
+    s?: number
+    l?: number
+    alpha?: number
+  }): HSLASpace => {
+    return new HSLASpace(
+      arg.h || this.h,
+      arg.s || this.s,
+      arg.l || this.l,
+      arg.alpha || this.alpha,
+    )
+  }
+
+  public copyWith = (arg: {
+    h?: ValueWithAngleUnit
+    s?: number
+    l?: number
+    alpha?: number
+  }): HSLASpace => {
+    return new HSLASpace(
+      arg.h || this.h,
+      arg.s || this.s,
+      arg.l || this.l,
+      arg.alpha || this.alpha,
+    )
   }
 
   public removeUnit(): HSLASpace {
@@ -308,6 +362,35 @@ export class HWBSpace implements ColorSpace {
     this.b = b
     this.alpha = alpha
   }
+
+  public update = (arg: {
+    h?: ValueWithAngleUnit
+    w?: number
+    b?: number
+    alpha?: number
+  }): HWBSpace => {
+    return new HWBSpace(
+      arg.h || this.h,
+      arg.w || this.w,
+      arg.b || this.b,
+      arg.alpha || this.alpha,
+    )
+  }
+
+  public copyWith = (arg: {
+    h?: ValueWithAngleUnit
+    w?: number
+    b?: number
+    alpha?: number
+  }): HWBSpace => {
+    return new HWBSpace(
+      arg.h || this.h,
+      arg.w || this.w,
+      arg.b || this.b,
+      arg.alpha || this.alpha,
+    )
+  }
+
   public toString(): string {
     return `hwb(${this.h.value}${this.h.unit} ${this.w * 100}% ${this.b * 100}% / ${this.alpha} )`
   }
@@ -357,6 +440,35 @@ export class XYZSpace implements ColorSpace {
     this.z = z
     this.alpha = alpha
   }
+
+  public update = (arg: {
+    x?: number
+    y?: number
+    z?: number
+    alpha?: number
+  }): XYZSpace => {
+    return new XYZSpace(
+      arg.x || this.x,
+      arg.y || this.y,
+      arg.z || this.z,
+      arg.alpha || this.alpha,
+    )
+  }
+
+  public copyWith = (arg: {
+    x?: number
+    y?: number
+    z?: number
+    alpha?: number
+  }): XYZSpace => {
+    return new XYZSpace(
+      arg.x || this.x,
+      arg.y || this.y,
+      arg.z || this.z,
+      arg.alpha || this.alpha,
+    )
+  }
+
   public toString(): string { return this.toRGBA().toString() }
   public static whitePoint(): XYZSpace {
     return new XYZSpace(.95047, 1.00000, 1.08883) // simulate D65/2deg : sunlight at noon
@@ -424,6 +536,35 @@ export class LabSpace implements ColorSpace {
     this.b = b
     this.alpha = alpha
   }
+
+  public update = (arg: {
+    l?: number
+    a?: number
+    b?: number
+    alpha?: number
+  }): LabSpace => {
+    return new LabSpace(
+      arg.l || this.l,
+      arg.a || this.a,
+      arg.b || this.b,
+      arg.alpha || this.alpha,
+    )
+  }
+
+  public copyWith = (arg: {
+    l?: number
+    a?: number
+    b?: number
+    alpha?: number
+  }): LabSpace => {
+    return new LabSpace(
+      arg.l || this.l,
+      arg.a || this.a,
+      arg.b || this.b,
+      arg.alpha || this.alpha,
+    )
+  }
+
   public toString(): string {
     return this.toRGBA().toString()
   }

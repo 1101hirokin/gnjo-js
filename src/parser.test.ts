@@ -24,10 +24,9 @@ describe("parsing", () => {
       const parser = new Parser(lexer)
       const [color, errors] = parser.parse()
       expect(color).toBe(null)
-      expect(errors.length).toBe(3)
+      expect(errors.length).toBe(2)
       expect(errors[0].category).toBe(ParseErrorCategory.HEX_PARSING)
-      expect(errors[1].category).toBe(ParseErrorCategory.HEX_PARSING)
-      expect(errors[2].category).toBe(ParseErrorCategory.TOO_MANY_NODES)
+      expect(errors[1].category).toBe(ParseErrorCategory.TOO_MANY_NODES)
     })
   })
   describe("named color", () => {

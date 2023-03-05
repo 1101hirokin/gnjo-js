@@ -34,14 +34,6 @@ export class Parser {
   private peekingTokenIs(type: TokenType): boolean {
     return this.peekToken.type === type
   }
-  private expectPeek(type: TokenType): boolean {
-    if (this.peekingTokenIs(type)) {
-      this.stepNextToken()
-      return true
-    } else {
-      return false
-    }
-  }
 
   private parseNamedColor(): AST.NamedColorNode {
     const t = this.curToken
@@ -59,14 +51,25 @@ export class Parser {
       value += this.curToken.literal
       this.stepNextToken()
     }
-    if (value.length !== 6 && value.length !== 8) {
+    if (value.length === 6 || value.length === 8) {
+      node.r = value[0] + value[1]
+      node.g = value[2] + value[3]
+      node.b = value[4] + value[5]
+      if (value.length === 8) {
+        node.alpha = value[6] + value[7]
+      }
+    } else if (value.length === 3 || value.length === 4) {
+      node.r = value[0] + value[0]
+      node.g = value[1] + value[1]
+      node.b = value[2] + value[2]
+      if (value.length === 4) {
+        node.alpha = value[3] + value[3]
+      }
+    } else { 
       this.errors.push(new ParseError("invalid HEX value length", ParseErrorCategory.HEX_PARSING))
-    }
-    node.r = value[0] + value[1]
-    node.g = value[2] + value[3]
-    node.b = value[4] + value[5]
-    if (value.length === 8) {
-      node.alpha = value[6] + value[7]
+      node.r = "00"
+      node.g = "00"
+      node.b = "00"
     }
     return node
   }
@@ -388,7 +391,6 @@ export class Parser {
   public parse(): [AST.Color | null, ParseError[]] {
     let nodes: AST.Node[] = []
 
-    let isInvalid = false
     while (!this.currentTokenIs(TokenType.EOS)) {
       switch (this.curToken.type) {
         case TokenType.NAMEDCOLOR:

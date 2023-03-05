@@ -9,7 +9,7 @@ import { Parser } from "./parser"
  * @param colorStr color string (e.g. "rgb(255, 255, 255)", "hsl(0, 0%, 100%)", "lab(100, 0, 0)", "midnightblue", "#00008b")
  * @returns {[ColorSpace, Error[]]} [color space, errors]
  */
-export const parseStringToColorSpace = <T = ColorSpace>(colorStr: string): [ColorSpace, Error[]] => {
+export const parse = <T = ColorSpace>(colorStr: string): [ColorSpace, Error[]] => {
   const lexer = new Lexer(colorStr)
   const parser = new Parser(lexer)
   const [color, errors] = parser.parse()
@@ -22,6 +22,13 @@ export const parseStringToColorSpace = <T = ColorSpace>(colorStr: string): [Colo
   const evaluated = evaluator.evaluate()
 
   return [evaluator.evaluate(), []]
+}
+
+/**
+ * @deprecated use parse(string) instead
+ */
+export const parseStringToRGBA = <T = ColorSpace>(colorStr: string): [ColorSpace, Error[]] => {
+  return parse<T>(colorStr)
 }
 
 const calcRelLumMember = (value: number): number => {

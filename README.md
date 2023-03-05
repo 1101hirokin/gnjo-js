@@ -31,7 +31,7 @@ import * as Gnjo from 'gnjo'
  * 
  * @returns {RGBASpace} extends {ColorSpace}
 */
-const [rgba, errors] = Gnjo.parseStringToColorSpace('rgba(255, 255, 255, .8)')
+const [rgba, errors] = Gnjo.parse('rgba(255, 255, 255, .8)')
 
 // you can get `r`, `g`, `b` and `alpha`
 const red = rgba.r // 255
@@ -52,7 +52,7 @@ You can convert color space into other color space.
 /**
  * You can get {RGBASpace}
  */
-const [rgba, errors] = Gnjo.parseStringToColorSpace('rgba(255, 255, 255, .8)')
+const [rgba, errors] = Gnjo.parse('rgba(255, 255, 255, .8)')
 // const rgba = new RGBASpace(128, 128, 128, .8)
 
 /**
