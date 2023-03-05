@@ -286,12 +286,6 @@ export class HWBSpace {
 export class XYZSpace {
     constructor(x, y, z, alpha = 1) {
         this.update = (arg) => {
-<<<<<<< HEAD
-            return new XYZSpace(arg.x || this.x, arg.y || this.y, arg.z || this.z, arg.alpha || this.alpha);
-        };
-        this.copyWith = (arg) => {
-            return new XYZSpace(arg.x || this.x, arg.y || this.y, arg.z || this.z, arg.alpha || this.alpha);
-=======
             this.x = (typeof arg.x !== "undefined") ? arg.x : this.x;
             this.y = (typeof arg.y !== "undefined") ? arg.y : this.y;
             this.z = (typeof arg.z !== "undefined") ? arg.z : this.z;
@@ -300,7 +294,6 @@ export class XYZSpace {
         };
         this.copyWith = (arg) => {
             return new XYZSpace((typeof arg.x !== "undefined") ? arg.x : this.x, (typeof arg.y !== "undefined") ? arg.y : this.y, (typeof arg.z !== "undefined") ? arg.z : this.z, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
->>>>>>> release/1.1.1
         };
         this.x = x;
         this.y = y;
@@ -355,12 +348,6 @@ export class XYZSpace {
 export class LabSpace {
     constructor(l, a, b, alpha = 1) {
         this.update = (arg) => {
-<<<<<<< HEAD
-            return new LabSpace(arg.l || this.l, arg.a || this.a, arg.b || this.b, arg.alpha || this.alpha);
-        };
-        this.copyWith = (arg) => {
-            return new LabSpace(arg.l || this.l, arg.a || this.a, arg.b || this.b, arg.alpha || this.alpha);
-=======
             this.l = (typeof arg.l !== "undefined") ? arg.l : this.l;
             this.a = (typeof arg.a !== "undefined") ? arg.a : this.a;
             this.b = (typeof arg.b !== "undefined") ? arg.b : this.b;
@@ -369,7 +356,6 @@ export class LabSpace {
         };
         this.copyWith = (arg) => {
             return new LabSpace((typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.a !== "undefined") ? arg.a : this.a, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
->>>>>>> release/1.1.1
         };
         this.l = l;
         this.a = a;
