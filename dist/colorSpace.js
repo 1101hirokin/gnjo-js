@@ -136,12 +136,6 @@ RGBASpace.getZero = () => {
 export class HSLASpace {
     constructor(h, s, l, alpha = 1) {
         this.update = (arg) => {
-<<<<<<< HEAD
-            return new HSLASpace(arg.h || this.h, arg.s || this.s, arg.l || this.l, arg.alpha || this.alpha);
-        };
-        this.copyWith = (arg) => {
-            return new HSLASpace(arg.h || this.h, arg.s || this.s, arg.l || this.l, arg.alpha || this.alpha);
-=======
             this.h = (typeof arg.h !== "undefined") ? arg.h : this.h;
             this.s = (typeof arg.s !== "undefined") ? arg.s : this.s;
             this.l = (typeof arg.l !== "undefined") ? arg.l : this.l;
@@ -150,7 +144,6 @@ export class HSLASpace {
         };
         this.copyWith = (arg) => {
             return new HSLASpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.s !== "undefined") ? arg.s : this.s, (typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
->>>>>>> release/1.1.1
         };
         this.h = h;
         this.s = s;
