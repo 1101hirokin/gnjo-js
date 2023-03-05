@@ -87,10 +87,10 @@ export class RGBASpace implements ColorSpace {
     b?: number
     alpha?: number
   }): RGBASpace => {
-    this.r = arg.r || this.r
-    this.g = arg.g || this.g
-    this.b = arg.b || this.b
-    this.alpha = arg.alpha || this.alpha
+    this.r = (typeof arg.r !== "undefined") ? arg.r : this.r
+    this.g = (typeof arg.g !== "undefined") ? arg.g : this.g
+    this.b = (typeof arg.b !== "undefined") ? arg.b : this.b
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
     return this
   }
   public copyWith = (arg: {
@@ -100,10 +100,10 @@ export class RGBASpace implements ColorSpace {
     alpha?: number
   }): RGBASpace => {
     return new RGBASpace(
-      arg.r || this.r,
-      arg.g || this.g,
-      arg.b || this.b,
-      arg.alpha || this.alpha,
+      (typeof arg.r !== "undefined") ? arg.r : this.r,
+      (typeof arg.g !== "undefined") ? arg.g : this.g,
+      (typeof arg.b !== "undefined") ? arg.b : this.b,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -243,10 +243,10 @@ export class HSLASpace implements ColorSpace {
     alpha?: number
   }): HSLASpace => {
     return new HSLASpace(
-      arg.h || this.h,
-      arg.s || this.s,
-      arg.l || this.l,
-      arg.alpha || this.alpha,
+      (typeof arg.h !== "undefined") ? arg.h : this.h,
+      (typeof arg.s !== "undefined") ? arg.s : this.s,
+      (typeof arg.l !== "undefined") ? arg.l : this.l,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -257,10 +257,10 @@ export class HSLASpace implements ColorSpace {
     alpha?: number
   }): HSLASpace => {
     return new HSLASpace(
-      arg.h || this.h,
-      arg.s || this.s,
-      arg.l || this.l,
-      arg.alpha || this.alpha,
+      (typeof arg.h !== "undefined") ? arg.h : this.h,
+      (typeof arg.s !== "undefined") ? arg.s : this.s,
+      (typeof arg.l !== "undefined") ? arg.l : this.l,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -370,10 +370,10 @@ export class HWBSpace implements ColorSpace {
     alpha?: number
   }): HWBSpace => {
     return new HWBSpace(
-      arg.h || this.h,
-      arg.w || this.w,
-      arg.b || this.b,
-      arg.alpha || this.alpha,
+      (typeof arg.h !== "undefined") ? arg.h : this.h,
+      (typeof arg.w !== "undefined") ? arg.w : this.w,
+      (typeof arg.b !== "undefined") ? arg.b : this.b,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -384,10 +384,10 @@ export class HWBSpace implements ColorSpace {
     alpha?: number
   }): HWBSpace => {
     return new HWBSpace(
-      arg.h || this.h,
-      arg.w || this.w,
-      arg.b || this.b,
-      arg.alpha || this.alpha,
+      (typeof arg.h !== "undefined") ? arg.h : this.h,
+      (typeof arg.w !== "undefined") ? arg.w : this.w,
+      (typeof arg.b !== "undefined") ? arg.b : this.b,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -448,10 +448,10 @@ export class XYZSpace implements ColorSpace {
     alpha?: number
   }): XYZSpace => {
     return new XYZSpace(
-      arg.x || this.x,
-      arg.y || this.y,
-      arg.z || this.z,
-      arg.alpha || this.alpha,
+      (typeof arg.x !== "undefined") ? arg.x : this.x,
+      (typeof arg.y !== "undefined") ? arg.y : this.y,
+      (typeof arg.z !== "undefined") ? arg.z : this.z,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -462,10 +462,10 @@ export class XYZSpace implements ColorSpace {
     alpha?: number
   }): XYZSpace => {
     return new XYZSpace(
-      arg.x || this.x,
-      arg.y || this.y,
-      arg.z || this.z,
-      arg.alpha || this.alpha,
+      (typeof arg.x !== "undefined") ? arg.x : this.x,
+      (typeof arg.y !== "undefined") ? arg.y : this.y,
+      (typeof arg.z !== "undefined") ? arg.z : this.z,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -544,10 +544,10 @@ export class LabSpace implements ColorSpace {
     alpha?: number
   }): LabSpace => {
     return new LabSpace(
-      arg.l || this.l,
-      arg.a || this.a,
-      arg.b || this.b,
-      arg.alpha || this.alpha,
+      (typeof arg.l !== "undefined") ? arg.l : this.l,
+      (typeof arg.a !== "undefined") ? arg.a : this.a,
+      (typeof arg.b !== "undefined") ? arg.b : this.b,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
@@ -558,10 +558,10 @@ export class LabSpace implements ColorSpace {
     alpha?: number
   }): LabSpace => {
     return new LabSpace(
-      arg.l || this.l,
-      arg.a || this.a,
-      arg.b || this.b,
-      arg.alpha || this.alpha,
+      (typeof arg.l !== "undefined") ? arg.l : this.l,
+      (typeof arg.a !== "undefined") ? arg.a : this.a,
+      (typeof arg.b !== "undefined") ? arg.b : this.b,
+      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
     )
   }
 
