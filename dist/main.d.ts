@@ -5,3 +5,4 @@ export * from './evaluator';
 export * from './utils';
 export * from './colorProcessing';
 export * from './colorSpace';
+//# sourceMappingURL=main.d.ts.map
