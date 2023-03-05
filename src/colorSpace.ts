@@ -90,7 +90,7 @@ export class RGBASpace implements ColorSpace {
     this.r = (typeof arg.r !== "undefined") ? arg.r : this.r
     this.g = (typeof arg.g !== "undefined") ? arg.g : this.g
     this.b = (typeof arg.b !== "undefined") ? arg.b : this.b
-    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
   public copyWith = (arg: {
@@ -103,7 +103,7 @@ export class RGBASpace implements ColorSpace {
       (typeof arg.r !== "undefined") ? arg.r : this.r,
       (typeof arg.g !== "undefined") ? arg.g : this.g,
       (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
+      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -245,7 +245,7 @@ export class HSLASpace implements ColorSpace {
     this.h = (typeof arg.h !== "undefined") ? arg.h : this.h
     this.s = (typeof arg.s !== "undefined") ? arg.s : this.s
     this.l = (typeof arg.l !== "undefined") ? arg.l : this.l
-    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
 
@@ -259,7 +259,7 @@ export class HSLASpace implements ColorSpace {
       (typeof arg.h !== "undefined") ? arg.h : this.h,
       (typeof arg.s !== "undefined") ? arg.s : this.s,
       (typeof arg.l !== "undefined") ? arg.l : this.l,
-      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
+      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -371,7 +371,7 @@ export class HWBSpace implements ColorSpace {
     this.h = (typeof arg.h !== "undefined") ? arg.h : this.h
     this.w = (typeof arg.w !== "undefined") ? arg.w : this.w
     this.b = (typeof arg.b !== "undefined") ? arg.b : this.b
-    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
 
@@ -385,7 +385,7 @@ export class HWBSpace implements ColorSpace {
       (typeof arg.h !== "undefined") ? arg.h : this.h,
       (typeof arg.w !== "undefined") ? arg.w : this.w,
       (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
+      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -448,7 +448,7 @@ export class XYZSpace implements ColorSpace {
     this.x = (typeof arg.x !== "undefined") ? arg.x : this.x
     this.y = (typeof arg.y !== "undefined") ? arg.y : this.y
     this.z = (typeof arg.z !== "undefined") ? arg.z : this.z
-    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
 
@@ -462,7 +462,7 @@ export class XYZSpace implements ColorSpace {
       (typeof arg.x !== "undefined") ? arg.x : this.x,
       (typeof arg.y !== "undefined") ? arg.y : this.y,
       (typeof arg.z !== "undefined") ? arg.z : this.z,
-      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
+      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -543,7 +543,7 @@ export class LabSpace implements ColorSpace {
     this.l = (typeof arg.l !== "undefined") ? arg.l : this.l
     this.a = (typeof arg.a !== "undefined") ? arg.a : this.a
     this.b = (typeof arg.b !== "undefined") ? arg.b : this.b
-    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha
+    this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
 
@@ -557,7 +557,7 @@ export class LabSpace implements ColorSpace {
       (typeof arg.l !== "undefined") ? arg.l : this.l,
       (typeof arg.a !== "undefined") ? arg.a : this.a,
       (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha,
+      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 

@@ -88,6 +88,97 @@ describe("color space testing", () => {
         })
       })
     })
+
+    describe("update color", () => {
+
+      describe("update r", () => {
+        it("should be rgb(0, 255, 255)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({r: 0})
+
+          expect(color.r).toBe(0)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(255)
+        })
+        it("should be rgb(90, 255, 255)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({r: 90})
+
+          expect(color.r).toBe(90)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(255)
+        })
+      })
+
+      describe("update g", () => {
+        it("should be rgb(255, 0, 255)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({g: 0})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(0)
+          expect(color.b).toBe(255)
+        })
+        it("should be rgb(255, 90, 255)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({g: 90})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(90)
+          expect(color.b).toBe(255)
+        })
+      })
+
+      describe("update b", () => {
+        it("should be rgb(255, 255, 0)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({b: 0})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(0)
+        })
+        it("should be rgb(255, 255, 90)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({b: 90})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(90)
+        })
+      })
+
+      describe("update alpha", () => {
+        it("should be rgba(255, 255, 255, 0)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({alpha: 0})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(255)
+          expect(color.alpha).toBe(0)
+
+          expect(color.toRGBA().toString()).toBe("rgb(255,255,255,0)")
+        })
+        it("should be rgba(255, 255, 255, 0.5)", () => {
+          const color = new RGBASpace(255, 255, 255)
+
+          color.update({alpha: 0.5})
+
+          expect(color.r).toBe(255)
+          expect(color.g).toBe(255)
+          expect(color.b).toBe(255)
+          expect(color.alpha).toBe(0.5)
+        })
+      })
+    })
   })
 
   describe("HSLA color space", () => {
