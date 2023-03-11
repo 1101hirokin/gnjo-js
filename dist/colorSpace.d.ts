@@ -70,7 +70,7 @@ export declare class RGBASpace implements ColorSpace {
         b?: number;
         alpha?: number;
     }) => RGBASpace;
-    copyWith: (arg: {
+    copyWith: (arg?: {
         r?: number;
         g?: number;
         b?: number;
@@ -109,7 +109,7 @@ export declare class HSLASpace implements ColorSpace {
         l?: number;
         alpha?: number;
     }) => HSLASpace;
-    copyWith: (arg: {
+    copyWith: (arg?: {
         h?: ValueWithAngleUnit;
         s?: number;
         l?: number;
@@ -150,7 +150,7 @@ export declare class HWBSpace implements ColorSpace {
         b?: number;
         alpha?: number;
     }) => HWBSpace;
-    copyWith: (arg: {
+    copyWith: (arg?: {
         h?: ValueWithAngleUnit;
         w?: number;
         b?: number;
@@ -189,7 +189,7 @@ export declare class XYZSpace implements ColorSpace {
         z?: number;
         alpha?: number;
     }) => XYZSpace;
-    copyWith: (arg: {
+    copyWith: (arg?: {
         x?: number;
         y?: number;
         z?: number;
@@ -228,7 +228,7 @@ export declare class LabSpace implements ColorSpace {
         b?: number;
         alpha?: number;
     }) => LabSpace;
-    copyWith: (arg: {
+    copyWith: (arg?: {
         l?: number;
         a?: number;
         b?: number;

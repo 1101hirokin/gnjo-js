@@ -22,7 +22,7 @@ export class RGBASpace {
             return this;
         };
         this.copyWith = (arg) => {
-            return new RGBASpace((typeof arg.r !== "undefined") ? arg.r : this.r, (typeof arg.g !== "undefined") ? arg.g : this.g, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+            return new RGBASpace((typeof (arg === null || arg === void 0 ? void 0 : arg.r) !== "undefined") ? arg.r : this.r, (typeof (arg === null || arg === void 0 ? void 0 : arg.g) !== "undefined") ? arg.g : this.g, (typeof (arg === null || arg === void 0 ? void 0 : arg.b) !== "undefined") ? arg.b : this.b, (typeof (arg === null || arg === void 0 ? void 0 : arg.alpha) !== "undefined") ? arg.alpha : this.alpha);
         };
         this.toRGBA = () => {
             return this;
@@ -143,7 +143,7 @@ export class HSLASpace {
             return this;
         };
         this.copyWith = (arg) => {
-            return new HSLASpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.s !== "undefined") ? arg.s : this.s, (typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+            return new HSLASpace((typeof (arg === null || arg === void 0 ? void 0 : arg.h) !== "undefined") ? arg.h : this.h, (typeof (arg === null || arg === void 0 ? void 0 : arg.s) !== "undefined") ? arg.s : this.s, (typeof (arg === null || arg === void 0 ? void 0 : arg.l) !== "undefined") ? arg.l : this.l, (typeof (arg === null || arg === void 0 ? void 0 : arg.alpha) !== "undefined") ? arg.alpha : this.alpha);
         };
         this.h = h;
         this.s = s;
@@ -243,7 +243,7 @@ export class HWBSpace {
             return this;
         };
         this.copyWith = (arg) => {
-            return new HWBSpace((typeof arg.h !== "undefined") ? arg.h : this.h, (typeof arg.w !== "undefined") ? arg.w : this.w, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+            return new HWBSpace((typeof (arg === null || arg === void 0 ? void 0 : arg.h) !== "undefined") ? arg.h : this.h, (typeof (arg === null || arg === void 0 ? void 0 : arg.w) !== "undefined") ? arg.w : this.w, (typeof (arg === null || arg === void 0 ? void 0 : arg.b) !== "undefined") ? arg.b : this.b, (typeof (arg === null || arg === void 0 ? void 0 : arg.alpha) !== "undefined") ? arg.alpha : this.alpha);
         };
         this.h = h;
         this.w = w;
@@ -293,7 +293,7 @@ export class XYZSpace {
             return this;
         };
         this.copyWith = (arg) => {
-            return new XYZSpace((typeof arg.x !== "undefined") ? arg.x : this.x, (typeof arg.y !== "undefined") ? arg.y : this.y, (typeof arg.z !== "undefined") ? arg.z : this.z, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+            return new XYZSpace((typeof (arg === null || arg === void 0 ? void 0 : arg.x) !== "undefined") ? arg.x : this.x, (typeof (arg === null || arg === void 0 ? void 0 : arg.y) !== "undefined") ? arg.y : this.y, (typeof (arg === null || arg === void 0 ? void 0 : arg.z) !== "undefined") ? arg.z : this.z, (typeof (arg === null || arg === void 0 ? void 0 : arg.alpha) !== "undefined") ? arg.alpha : this.alpha);
         };
         this.x = x;
         this.y = y;
@@ -355,7 +355,7 @@ export class LabSpace {
             return this;
         };
         this.copyWith = (arg) => {
-            return new LabSpace((typeof arg.l !== "undefined") ? arg.l : this.l, (typeof arg.a !== "undefined") ? arg.a : this.a, (typeof arg.b !== "undefined") ? arg.b : this.b, (typeof arg.alpha !== "undefined") ? arg.alpha : this.alpha);
+            return new LabSpace((typeof (arg === null || arg === void 0 ? void 0 : arg.l) !== "undefined") ? arg.l : this.l, (typeof (arg === null || arg === void 0 ? void 0 : arg.a) !== "undefined") ? arg.a : this.a, (typeof (arg === null || arg === void 0 ? void 0 : arg.b) !== "undefined") ? arg.b : this.b, (typeof (arg === null || arg === void 0 ? void 0 : arg.alpha) !== "undefined") ? arg.alpha : this.alpha);
         };
         this.l = l;
         this.a = a;

@@ -19,7 +19,6 @@ export const parse = (colorStr) => {
         return [RGBASpace.getZero(), [new Error("color is null")]];
     }
     const evaluator = new Evaluator(color);
-    const evaluated = evaluator.evaluate();
     return [evaluator.evaluate(), []];
 };
 /**
@@ -120,10 +119,14 @@ export const getSteppedColors = (startColor, endColor, step) => {
  * @param degree
  * @returns {ColorSpace} rotated color
  */
-export const getHueAdjustedColor = (color, degree) => {
+export const adjustHue = (color, degree) => {
     const hsla = color.toHSLA().removeUnit();
     hsla.h.value = (hsla.h.value + degree) % 360;
     return hsla;
+};
+export const getHueAdjustedColor = (color, degree) => {
+    const copy = color.toHSLA().copyWith();
+    return adjustHue(copy, degree);
 };
 /**
  * lighten color
@@ -133,11 +136,15 @@ export const getHueAdjustedColor = (color, degree) => {
  * @param ratio ratio: -1.0 - 1.0
  * @returns {ColorSpace} lightened color
  */
-export const getLightenedColor = (color, ratio) => {
+export const lighten = (color, ratio) => {
     const hsla = color.toHSLA().removeUnit();
     const lightness = hsla.l + ratio;
     hsla.l = (lightness > 1) ? 1 : (lightness < 0) ? 0 : lightness;
     return hsla;
+};
+export const getLightenedColor = (color, ratio) => {
+    const copy = color.toHSLA().copyWith();
+    return lighten(copy, ratio);
 };
 /**
  * saturate color
@@ -147,11 +154,15 @@ export const getLightenedColor = (color, ratio) => {
  * @param ratio ratio: -1.0 - 1.0
  * @returns {ColorSpace} saturated color
  */
-export const getSaturatedColor = (color, ratio) => {
+export const saturate = (color, ratio) => {
     const hsla = color.toHSLA().removeUnit();
     const saturation = hsla.s * (1 + ratio);
     hsla.s = (saturation > 1) ? 1 : (saturation < 0) ? 0 : saturation;
     return hsla;
+};
+export const getSaturatedColor = (color, ratio) => {
+    const copy = color.toHSLA().copyWith();
+    return saturate(copy, ratio);
 };
 /**
  * get grayscale color from color
@@ -159,7 +170,7 @@ export const getSaturatedColor = (color, ratio) => {
  * @param color
  * @returns {ColorSpace} gray scaled color
  */
-export const getGrayScaledColor = (color) => {
+export const grayScale = (color) => {
     const rgba = color.toRGBA();
     const converter = [
         [0.299],
@@ -167,7 +178,11 @@ export const getGrayScaledColor = (color) => {
         [0.114],
     ];
     const gray = (converter[0][0] * rgba.r) + (converter[1][0] * rgba.g) + (converter[2][0] * rgba.b);
-    return new RGBASpace(gray, gray, gray, rgba.alpha);
+    return rgba.update({ r: gray, g: gray, b: gray });
+};
+export const getGrayScaledColor = (color) => {
+    const copy = color.toRGBA().copyWith();
+    return grayScale(copy);
 };
 /**
  * invert color
@@ -175,9 +190,13 @@ export const getGrayScaledColor = (color) => {
  * @param color
  * @returns {ColorSpace} inverted color
  */
-export const getInvertedColor = (color) => {
+export const invert = (color) => {
     const rgba = color.toRGBA();
-    return new RGBASpace(255 - rgba.r, 255 - rgba.g, 255 - rgba.b, rgba.alpha);
+    return rgba.update({ r: 255 - rgba.r, g: 255 - rgba.g, b: 255 - rgba.b });
+};
+export const getInvertedColor = (color) => {
+    const copy = color.toRGBA().copyWith();
+    return invert(copy);
 };
 /**
  * get complementary color
@@ -185,10 +204,14 @@ export const getInvertedColor = (color) => {
  * @param color
  * @returns {ColorSpace} complementary color
  */
-export const getComplemetaryColor = (color) => {
+export const complement = (color) => {
     const cs = color.toHSLA().removeUnit();
     cs.h.value = (cs.h.value + 180) % 360;
     return cs;
+};
+export const getComplemetaryColor = (color) => {
+    const copy = color.toHSLA().copyWith();
+    return complement(copy);
 };
 /**
  *
@@ -197,7 +220,7 @@ export const getComplemetaryColor = (color) => {
  * @param ratio default 0.5
  * @returns {ColorSpace} mixed color
  */
-export const getMixedColor = (firstColor, secondColor, ratio = 0.5) => {
+export const mix = (firstColor, secondColor, ratio = 0.5) => {
     const first = firstColor.toRGBA();
     const second = secondColor.toRGBA();
     const r = first.r * ratio + second.r * (1 - ratio);
@@ -205,5 +228,9 @@ export const getMixedColor = (firstColor, secondColor, ratio = 0.5) => {
     const b = first.b * ratio + second.b * (1 - ratio);
     const a = first.alpha * ratio + second.alpha * (1 - ratio);
     return new RGBASpace(r, g, b, a);
+};
+export const getMixedColor = (firstColor, secondColor, ratio = 0.5) => {
+    // alias of mix()
+    return mix(firstColor, secondColor, ratio);
 };
 //# sourceMappingURL=colorProcessing.js.map
