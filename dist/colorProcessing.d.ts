@@ -58,6 +58,7 @@ export declare const getSteppedColors: (startColor: ColorSpace, endColor: ColorS
  * @param degree
  * @returns {ColorSpace} rotated color
  */
+export declare const adjustHue: (color: ColorSpace, degree: number) => ColorSpace;
 export declare const getHueAdjustedColor: (color: ColorSpace, degree: number) => ColorSpace;
 /**
  * lighten color
@@ -67,6 +68,7 @@ export declare const getHueAdjustedColor: (color: ColorSpace, degree: number) =>
  * @param ratio ratio: -1.0 - 1.0
  * @returns {ColorSpace} lightened color
  */
+export declare const lighten: (color: ColorSpace, ratio: number) => ColorSpace;
 export declare const getLightenedColor: (color: ColorSpace, ratio: number) => ColorSpace;
 /**
  * saturate color
@@ -76,6 +78,7 @@ export declare const getLightenedColor: (color: ColorSpace, ratio: number) => Co
  * @param ratio ratio: -1.0 - 1.0
  * @returns {ColorSpace} saturated color
  */
+export declare const saturate: (color: ColorSpace, ratio: number) => ColorSpace;
 export declare const getSaturatedColor: (color: ColorSpace, ratio: number) => ColorSpace;
 /**
  * get grayscale color from color
@@ -83,6 +86,7 @@ export declare const getSaturatedColor: (color: ColorSpace, ratio: number) => Co
  * @param color
  * @returns {ColorSpace} gray scaled color
  */
+export declare const grayScale: (color: ColorSpace) => ColorSpace;
 export declare const getGrayScaledColor: (color: ColorSpace) => ColorSpace;
 /**
  * invert color
@@ -90,6 +94,7 @@ export declare const getGrayScaledColor: (color: ColorSpace) => ColorSpace;
  * @param color
  * @returns {ColorSpace} inverted color
  */
+export declare const invert: (color: ColorSpace) => ColorSpace;
 export declare const getInvertedColor: (color: ColorSpace) => ColorSpace;
 /**
  * get complementary color
@@ -97,6 +102,7 @@ export declare const getInvertedColor: (color: ColorSpace) => ColorSpace;
  * @param color
  * @returns {ColorSpace} complementary color
  */
+export declare const complement: (color: ColorSpace) => ColorSpace;
 export declare const getComplemetaryColor: (color: ColorSpace) => ColorSpace;
 /**
  *
@@ -105,6 +111,7 @@ export declare const getComplemetaryColor: (color: ColorSpace) => ColorSpace;
  * @param ratio default 0.5
  * @returns {ColorSpace} mixed color
  */
+export declare const mix: (firstColor: ColorSpace, secondColor: ColorSpace, ratio?: number) => ColorSpace;
 export declare const getMixedColor: (firstColor: ColorSpace, secondColor: ColorSpace, ratio?: number) => ColorSpace;
 export {};
 //# sourceMappingURL=colorProcessing.d.ts.map
