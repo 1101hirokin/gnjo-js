@@ -156,7 +156,7 @@ export const getHueAdjustedColor = (color: ColorSpace, degree: number): ColorSpa
  */
 export const getLightenedColor = (color: ColorSpace, ratio: number): ColorSpace => {
   const hsla = color.toHSLA().removeUnit()
-  const lightness = hsla.l * (1 + ratio)
+  const lightness = hsla.l + ratio
   hsla.l = (lightness > 1) ? 1 : (lightness < 0) ? 0 : lightness
 
   return hsla
