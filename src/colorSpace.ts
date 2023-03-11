@@ -93,17 +93,17 @@ export class RGBASpace implements ColorSpace {
     this.alpha = (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha
     return this
   }
-  public copyWith = (arg: {
+  public copyWith = (arg?: {
     r?: number
     g?: number
     b?: number
     alpha?: number
   }): RGBASpace => {
     return new RGBASpace(
-      (typeof arg.r !== "undefined") ? arg.r : this.r,
-      (typeof arg.g !== "undefined") ? arg.g : this.g,
-      (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
+      (typeof arg?.r !== "undefined") ? arg.r : this.r,
+      (typeof arg?.g !== "undefined") ? arg.g : this.g,
+      (typeof arg?.b !== "undefined") ? arg.b : this.b,
+      (typeof arg?.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -249,17 +249,17 @@ export class HSLASpace implements ColorSpace {
     return this
   }
 
-  public copyWith = (arg: {
+  public copyWith = (arg?: {
     h?: ValueWithAngleUnit
     s?: number
     l?: number
     alpha?: number
   }): HSLASpace => {
     return new HSLASpace(
-      (typeof arg.h !== "undefined") ? arg.h : this.h,
-      (typeof arg.s !== "undefined") ? arg.s : this.s,
-      (typeof arg.l !== "undefined") ? arg.l : this.l,
-      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
+      (typeof arg?.h !== "undefined") ? arg.h : this.h,
+      (typeof arg?.s !== "undefined") ? arg.s : this.s,
+      (typeof arg?.l !== "undefined") ? arg.l : this.l,
+      (typeof arg?.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -375,17 +375,17 @@ export class HWBSpace implements ColorSpace {
     return this
   }
 
-  public copyWith = (arg: {
+  public copyWith = (arg?: {
     h?: ValueWithAngleUnit
     w?: number
     b?: number
     alpha?: number
   }): HWBSpace => {
     return new HWBSpace(
-      (typeof arg.h !== "undefined") ? arg.h : this.h,
-      (typeof arg.w !== "undefined") ? arg.w : this.w,
-      (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
+      (typeof arg?.h !== "undefined") ? arg.h : this.h,
+      (typeof arg?.w !== "undefined") ? arg.w : this.w,
+      (typeof arg?.b !== "undefined") ? arg.b : this.b,
+      (typeof arg?.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -452,17 +452,17 @@ export class XYZSpace implements ColorSpace {
     return this
   }
 
-  public copyWith = (arg: {
+  public copyWith = (arg?: {
     x?: number
     y?: number
     z?: number
     alpha?: number
   }): XYZSpace => {
     return new XYZSpace(
-      (typeof arg.x !== "undefined") ? arg.x : this.x,
-      (typeof arg.y !== "undefined") ? arg.y : this.y,
-      (typeof arg.z !== "undefined") ? arg.z : this.z,
-      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
+      (typeof arg?.x !== "undefined") ? arg.x : this.x,
+      (typeof arg?.y !== "undefined") ? arg.y : this.y,
+      (typeof arg?.z !== "undefined") ? arg.z : this.z,
+      (typeof arg?.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
@@ -547,17 +547,17 @@ export class LabSpace implements ColorSpace {
     return this
   }
 
-  public copyWith = (arg: {
+  public copyWith = (arg?: {
     l?: number
     a?: number
     b?: number
     alpha?: number
   }): LabSpace => {
     return new LabSpace(
-      (typeof arg.l !== "undefined") ? arg.l : this.l,
-      (typeof arg.a !== "undefined") ? arg.a : this.a,
-      (typeof arg.b !== "undefined") ? arg.b : this.b,
-      (typeof arg.alpha !== "undefined") ? arg.alpha! : this.alpha,
+      (typeof arg?.l !== "undefined") ? arg.l : this.l,
+      (typeof arg?.a !== "undefined") ? arg.a : this.a,
+      (typeof arg?.b !== "undefined") ? arg.b : this.b,
+      (typeof arg?.alpha !== "undefined") ? arg.alpha! : this.alpha,
     )
   }
 
